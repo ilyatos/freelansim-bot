@@ -26,6 +26,4 @@ class m180616_122457_users_table extends Migration
     {
         $this->dropTable('users');
     }
-
-    
 }

@@ -1,24 +1,10 @@
 <?php
 
-namespace app\controllers;
-
-require_once 'components/simple_html_dom.php';
-
-
-class ClassConstants {
-    static $CONTAINER = '.content-list_tasks';
-    static $PRICE_SECTION = '.task__price';
-    static $PRICE = '.count';
-    static $PRICE_SUFFIX = '.suffix';
-    static $PRICE_NEGOTIATED = '.negotiated_price';
-    static $TITLE = '.task__title a';
-    static $TAGS = '.task__tags';
-    static $PAGINATION_LINK = '.pagination a';
-}
+require_once '../components/simple_html_dom.php';
+require_once 'ClassConstants.php';
 
 
-class Parser
-{
+class Parser {
     private $url;
     private $tags;
 
@@ -38,8 +24,9 @@ class Parser
         }
     }
 
+
     private function getContainerNode($page) {
-        return $page->find(ClassConstants::$CONTAINER, 0);
+        return $page->find(ClassConstants::CONTAINER, 0);
     }
 
 
@@ -58,17 +45,16 @@ class Parser
 
 
     private function getPrice($priceNode) {
-        $hasPrice = is_null($priceNode->find(ClassConstants::$PRICE_NEGOTIATED, 0));
-
+        $hasPrice = is_null($priceNode->find(ClassConstants::PRICE_NEGOTIATED, 0));
 
         if ($hasPrice) {
             return [
-                'price' => $priceNode->find(ClassConstants::$PRICE, 0)->text(),
-                'suffix' => $priceNode->find(ClassConstants::$PRICE_SUFFIX, 0)->text()
+                'price' => $priceNode->find(ClassConstants::PRICE, 0)->text(),
+                'suffix' => $priceNode->find(ClassConstants::PRICE_SUFFIX, 0)->text()
             ];
         } else {
             return [
-                'price' => $priceNode->find(ClassConstants::$PRICE_NEGOTIATED, 0)->text(),
+                'price' => $priceNode->find(ClassConstants::PRICE_NEGOTIATED, 0)->text(),
                 'suffix' => ''
             ];
         }
@@ -76,11 +62,11 @@ class Parser
 
 
     private function getTask($taskNode) {
-        if (!is_null($taskNode->find(ClassConstants::$TITLE, 0))) {
+        if (!is_null($taskNode->find(ClassConstants::TITLE, 0))) {
             return [
-                'title' => trim($taskNode->find(ClassConstants::$TITLE, 0)->text()),
-                'tags' => $this->getTags($taskNode->find(ClassConstants::$TAGS, 0)),
-                'price' => $this->getPrice($taskNode->find(ClassConstants::$PRICE_SECTION, 0))
+                'title' => trim($taskNode->find(ClassConstants::TITLE, 0)->text()),
+                'tags' => $this->getTags($taskNode->find(ClassConstants::TAGS, 0)),
+                'price' => $this->getPrice($taskNode->find(ClassConstants::PRICE_SECTION, 0))
             ];
         } else {
             return null;
@@ -103,7 +89,7 @@ class Parser
 
 
     private function getPageCount($page) {
-        $paginationNode = $page->find(ClassConstants::$PAGINATION_LINK, -2);
+        $paginationNode = $page->find(ClassConstants::PAGINATION_LINK, -2);
 
         if (!is_null($paginationNode)) {
             $pageCountString = $paginationNode->text();
@@ -152,7 +138,3 @@ class Parser
         return $parsed;
     }
 }
-
-$parser = new Parser(['url' => 'https://freelansim.ru/tasks', 'tags' => ['python']]);
-
-var_dump($parser->parse());

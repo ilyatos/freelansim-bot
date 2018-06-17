@@ -10,7 +10,7 @@ class DbConnection {
     function __construct() {
         try {
             $user_db = require 'config/db.php';
-            $db = new \PDO("mysql:host = $user_db[host];dbname = $user_db[databse]", $user_db[user], $user_db[password]);
+            $db = new \PDO("mysql:host = $user_db[host];dbname = $user_db[database]", $user_db[user], $user_db[password]);
         } catch (\PDOException $exception) {
             $exception->getTrace();
         }
@@ -20,9 +20,11 @@ class DbConnection {
         $sql = "INSERT INTO users(chat_id, subscribe) VALUES ($id, $subscribing)";
         try {
             $this->db->execute($sql);
-            $this->db = null;
         } catch (\PDOException $exception) {
             $exception->getTrace();
+        }
+        finally {
+            $this->db = null;
         }
     }
 
@@ -31,10 +33,12 @@ class DbConnection {
         try{
             $state = $this->db->query($sql);
             $result = $state->FETCHALL(PDO::FETCH_NUM);
-            $this->db = null;
             return $result;
-        } catch (\PDOException $e){
+        } catch (\PDOException $e) {
             $e->getTrace();
+        }
+        finally {
+            $this->db = null;
         }
     }
 

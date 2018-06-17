@@ -14,18 +14,25 @@ $mysql_credentials = [
 ];
 
 try {
+    // Create Telegram API object
+    $telegram = new Telegram($bot_api_key, $bot_username);
+
     while (true) {
-        // Create Telegram API object
-        $telegram = new Telegram($bot_api_key, $bot_username);
+        sleep(3);
 
         // Enable MySQL
-        //$telegram->enableMySql($mysql_credentials);
         $telegram->useGetUpdatesWithoutDatabase();
 
         // Handle telegram getUpdates request
         $response = $telegram->handleGetUpdates();
-        sleep(5);
-        echo $response;
+
+        $results = $response->getResult();
+
+        if (!empty($results)) {
+            foreach ($results as $result) {
+                var_dump($result);
+            }
+        }
     }
 } catch (Longman\TelegramBot\Exception\TelegramException $e) {
     // log telegram errors

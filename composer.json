@@ -1,5 +1,19 @@
 {
+    "name": "ilyagoryachev/freelansim-bot",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Ilyamander los Ilyatos",
+            "email": "mrend@icloud.com"
+        }
+    ],
     "require": {
         "longman/telegram-bot": "^0.53.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "app\\" : "app/",
+            "components\\" : "components/"
+        }
     }
 }

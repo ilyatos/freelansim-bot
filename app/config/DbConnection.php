@@ -11,6 +11,7 @@ namespace app;
 
 class DbConnection {
     private $db;
+
     function __construct() {
         try {
             $user_db = require 'config/db.php';

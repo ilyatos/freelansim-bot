@@ -1,11 +1,11 @@
 <?php
 
-require __DIR__ . '/vendor/autoload.php';
+require '../vendor/autoload.php';
 
 use \Longman\TelegramBot\Telegram;
 
-$bot_api_key  = 'your:bot_api_key';
-$bot_username = 'username_bot';
+$bot_api_key  = '565720307:AAGIrB3yGu8IYd2-3nGH4J2wLBraLgzWwFs';
+$bot_username = 'freelansim_gl_bot';
 $mysql_credentials = [
     'host'     => 'localhost',
     'user'     => 'root',
@@ -14,15 +14,20 @@ $mysql_credentials = [
 ];
 
 try {
-    // Create Telegram API object
-    $telegram = new Longman\TelegramBot\Telegram($bot_api_key, $bot_username);
+    while (true) {
+        // Create Telegram API object
+        $telegram = new Telegram($bot_api_key, $bot_username);
 
-    // Enable MySQL
-    $telegram->enableMySql($mysql_credentials);
+        // Enable MySQL
+        //$telegram->enableMySql($mysql_credentials);
+        $telegram->useGetUpdatesWithoutDatabase();
 
-    // Handle telegram getUpdates request
-    $telegram->handleGetUpdates();
+        // Handle telegram getUpdates request
+        $response = $telegram->handleGetUpdates();
+        sleep(5);
+        echo $response;
+    }
 } catch (Longman\TelegramBot\Exception\TelegramException $e) {
     // log telegram errors
-    // echo $e->getMessage();
+     echo $e->getMessage();
 }

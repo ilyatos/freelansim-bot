@@ -4,39 +4,34 @@
 namespace app;
 
 
-class db_connection{
+class DbConnection{
     private $db;
 
-    function __construct()
-    {
+    function __construct() {
         try {
             $user_db = require 'config/db.php';
             $db = new \PDO("mysql:host = $user_db[host];dbname = $user_db[databse]", $user_db[user], $user_db[password]);
-        }catch (\PDOException $exception){$exception->getTrace();}
+        } catch (\PDOException $exception) {$exception->getTrace();}
     }
 
-    function push_to_base($id, $subscribing){
+    function pushToBase($id, $subscribing) {
         $sql = "INSERT INTO users(chat_id, subscribe) VALUES ($id, $subscribing)";
         try {
             $this->db->execute($sql);
-        }catch (\PDOException $exception){$exception->getTrace();}
+            $this->db = null;
+        } catch (\PDOException $exception) {$exception->getTrace();}
     }
 
-    function get_users(){
+    function getUsers() {
         $sql = "SELECT chat_id FROM users WHERE subscribe = 1";
         try{
             $state = $this->db->query($sql);
             $result = $state->FETCHALL(PDO::FETCH_NUM);
             return $result;
-        }catch (\PDOException $e){$e->getTrace();}
+            $this->db = null;
+        } catch (\PDOException $e){$e->getTrace();}
     }
-    
+
 }
-
-
-
-
-
-
 
     ?>

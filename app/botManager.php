@@ -10,7 +10,7 @@ use app\TelegramUpdatesManager;
 use components\common\Logger;
 
 $updater = new TelegramUpdatesManager();
-$telegramDict = require_once '../config/telegram_dict.php';
+$telegramDict = require_once '../config/telegramDictionary.php';
 
 while (true) {
     //получает данные о входящих сообщениях

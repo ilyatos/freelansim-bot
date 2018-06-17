@@ -2,76 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d46bc43a-a5a3-4279-b040-bba0d0175972" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/index.php" />
-      <change beforePath="$PROJECT_DIR$/.bowerrc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/LICENSE.md" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/README.md" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Vagrantfile" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/assets/AppAsset.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/codeception.yml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/commands/HelloController.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/composer.json" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/config/console.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/config/db.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/config/params.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/config/test.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/config/test_db.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/config/web.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/controllers/BotController.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/controllers/SiteController.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/mail/layouts/html.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/migrations/m180616_122457_users_table.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/models/User.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/requirements.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/runtime/.gitignore" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/tests/_bootstrap.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/tests/_data/.gitkeep" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/tests/_output/.gitignore" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/tests/_support/AcceptanceTester.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/tests/_support/FunctionalTester.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/tests/_support/UnitTester.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/tests/acceptance.suite.yml.example" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/tests/acceptance/AboutCest.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/tests/acceptance/ContactCest.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/tests/acceptance/HomeCest.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/tests/acceptance/LoginCest.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/tests/acceptance/_bootstrap.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/tests/bin/yii" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/tests/bin/yii.bat" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/tests/functional.suite.yml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/tests/functional/ContactFormCest.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/tests/functional/LoginFormCest.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/tests/functional/_bootstrap.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/tests/unit.suite.yml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/_bootstrap.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/models/ContactFormTest.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/models/LoginFormTest.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/models/UserTest.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/vagrant/config/.gitignore" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/vagrant/config/vagrant-local.example.yml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/vagrant/nginx/app.conf" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/vagrant/nginx/log/.gitignore" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/vagrant/provision/always-as-root.sh" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/vagrant/provision/once-as-root.sh" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/vagrant/provision/once-as-vagrant.sh" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/views/layouts/main.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/views/site/about.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/views/site/contact.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/views/site/error.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/views/site/index.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/views/site/login.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/web/assets/.gitignore" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/web/css/site.css" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/web/favicon.ico" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/web/index-test.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/web/index.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/web/robots.txt" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/widgets/Alert.php" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/yii" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/yii.bat" afterPath="" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -85,11 +18,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="270">
+              <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="15">
+              <caret line="1" column="6" lean-forward="false" selection-start-line="1" selection-start-column="6" selection-end-line="1" selection-end-column="6" />
               <folding />
             </state>
           </provider>
@@ -114,6 +57,8 @@
         <option value="$PROJECT_DIR$/config/web.php" />
         <option value="$PROJECT_DIR$/controllers/BotController.php" />
         <option value="$PROJECT_DIR$/migrations/m180616_122457_users_table.php" />
+        <option value="$PROJECT_DIR$/index.php" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -197,17 +142,18 @@
       <workItem from="1529151572206" duration="1670000" />
       <workItem from="1529160213000" duration="1737000" />
       <workItem from="1529177909775" duration="3000" />
-      <workItem from="1529230284563" duration="1591000" />
+      <workItem from="1529230284563" duration="1902000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5346000" />
+    <option name="totallyTimeSpent" value="5657000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26752505" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26752505" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -338,13 +284,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/yii">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -433,8 +372,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="270">
+          <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="6" lean-forward="false" selection-start-line="1" selection-start-column="6" selection-end-line="1" selection-end-column="6" />
           <folding />
         </state>
       </provider>

@@ -22,8 +22,7 @@ class DbConnection {
             $this->db->execute($sql);
         } catch (\PDOException $exception) {
             $exception->getTrace();
-        }
-        finally {
+        } finally {
             $this->db = null;
         }
     }
@@ -36,8 +35,7 @@ class DbConnection {
             return $result;
         } catch (\PDOException $e) {
             $e->getTrace();
-        }
-        finally {
+        } finally {
             $this->db = null;
         }
     }

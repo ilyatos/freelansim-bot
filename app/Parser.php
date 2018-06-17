@@ -1,12 +1,20 @@
 <?php
 
 require_once '../components/simple_html_dom.php';
-require_once 'ClassConstants.php';
 
 
 class Parser {
-    private $url;
-    private $tags;
+    const CONTAINER = '.content-list_tasks';
+    const PRICE_SECTION = '.task__price';
+    const PRICE = '.count';
+    const PRICE_SUFFIX = '.suffix';
+    const PRICE_NEGOTIATED = '.negotiated_price';
+    const TITLE = '.task__title a';
+    const TAGS = '.task__tags';
+    const PAGINATION_LINK = '.pagination a';
+
+    private $url = null;
+    private $tags = null;
 
 
     function __construct($params=null) {
@@ -26,7 +34,7 @@ class Parser {
 
 
     private function getContainerNode($page) {
-        return $page->find(ClassConstants::CONTAINER, 0);
+        return $page->find($this::CONTAINER, 0);
     }
 
 
@@ -45,16 +53,16 @@ class Parser {
 
 
     private function getPrice($priceNode) {
-        $hasPrice = is_null($priceNode->find(ClassConstants::PRICE_NEGOTIATED, 0));
+        $hasPrice = is_null($priceNode->find($this::PRICE_NEGOTIATED, 0));
 
         if ($hasPrice) {
             return [
-                'price' => $priceNode->find(ClassConstants::PRICE, 0)->text(),
-                'suffix' => $priceNode->find(ClassConstants::PRICE_SUFFIX, 0)->text()
+                'price' => $priceNode->find($this::PRICE, 0)->text(),
+                'suffix' => $priceNode->find($this::PRICE_SUFFIX, 0)->text()
             ];
         } else {
             return [
-                'price' => $priceNode->find(ClassConstants::PRICE_NEGOTIATED, 0)->text(),
+                'price' => $priceNode->find($this::PRICE_NEGOTIATED, 0)->text(),
                 'suffix' => ''
             ];
         }
@@ -62,11 +70,11 @@ class Parser {
 
 
     private function getTask($taskNode) {
-        if (!is_null($taskNode->find(ClassConstants::TITLE, 0))) {
+        if (!is_null($taskNode->find($this::TITLE, 0))) {
             return [
-                'title' => trim($taskNode->find(ClassConstants::TITLE, 0)->text()),
-                'tags' => $this->getTags($taskNode->find(ClassConstants::TAGS, 0)),
-                'price' => $this->getPrice($taskNode->find(ClassConstants::PRICE_SECTION, 0))
+                'title' => trim($taskNode->find($this::TITLE, 0)->text()),
+                'tags' => $this->getTags($taskNode->find($this::TAGS, 0)),
+                'price' => $this->getPrice($taskNode->find($this::PRICE_SECTION, 0))
             ];
         } else {
             return null;
@@ -89,7 +97,7 @@ class Parser {
 
 
     private function getPageCount($page) {
-        $paginationNode = $page->find(ClassConstants::PAGINATION_LINK, -2);
+        $paginationNode = $page->find($this::PAGINATION_LINK, -2);
 
         if (!is_null($paginationNode)) {
             $pageCountString = $paginationNode->text();

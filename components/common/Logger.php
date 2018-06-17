@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: IlyaGoryachev
- * Date: 17.06.2018
- * Time: 22:10
- */
 
 namespace components\common;
 

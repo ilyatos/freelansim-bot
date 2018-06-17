@@ -4,7 +4,7 @@ namespace app;
 
 use Longman\TelegramBot\Telegram;
 
-class GetUpdates
+class TelegramUpdatesManager
 {
     private $BOT_API_KEY  = '565720307:AAGIrB3yGu8IYd2-3nGH4J2wLBraLgzWwFs';
     private $BOT_USERNAME = 'freelansim_gl_bot';

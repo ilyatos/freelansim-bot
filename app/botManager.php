@@ -4,19 +4,15 @@ namespace app;
 
 require __DIR__.'/../vendor/autoload.php';
 
-use Longman\TelegramBot\Entities\InlineKeyboard;
 use Longman\TelegramBot\Request;
-use Longman\TelegramBot\Commands\UserCommands\InlinekeyboardCommand;
 
-use app\GetUpdates;
+use app\TelegramUpdatesManager;
 use components\common\Logger;
 
-$updater = new GetUpdates();
+$updater = new TelegramUpdatesManager();
 $telegramDict = require_once '../config/telegram_dict.php';
 
 while (true) {
-    sleep(1);
-
     //получает данные о входящих сообщениях
     $results = $updater->action();
 
@@ -47,4 +43,5 @@ while (true) {
             Request::sendMessage($data);
         }
     }
+    sleep(1);
 }

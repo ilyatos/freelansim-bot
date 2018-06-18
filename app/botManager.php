@@ -4,6 +4,8 @@ namespace app;
 
 require __DIR__.'/../vendor/autoload.php';
 
+use app\components\bot\InlineKeyboard;
+use app\components\bot\SimpleMessageSender;
 use app\components\bot\TelegramUpdatesManager;
 use app\components\common\Logger;
 
@@ -35,12 +37,15 @@ while (true) {
                 }
             };
 
-            $content = [
-                'chat_id' => $chatId,
-                'text' => $answer($text,$telegramDict)
-            ];
-            
-            $telegram->sendMessage($content);
+            if ($text=='/start') {
+                $sms = new SimpleMessageSender($telegram);
+                $sms->sendMessage($chatId, $answer($text, $telegramDict));
+            }
+
+            if ($text=='/subs') {
+                $subs = new InlineKeyboard($telegram);
+                $subs->sendSubs($chatId, $answer($text, $telegramDict));
+            }
         }
     }
     sleep(1);

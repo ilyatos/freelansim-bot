@@ -37,14 +37,18 @@ while (true) {
                 }
             };
 
-            if ($text=='/start') {
-                $sms = new SimpleMessageSender($telegram);
-                $sms->sendMessage($chatId, $answer($text, $telegramDict));
-            }
-
-            if ($text=='/subs') {
-                $subs = new InlineKeyboard($telegram);
-                $subs->sendSubs($chatId, $answer($text, $telegramDict));
+            switch ($text) {
+                case '/start':
+                    $sms = new SimpleMessageSender($telegram);
+                    $sms->sendMessage($chatId, $answer($text, $telegramDict));
+                    break;
+                case '/subs':
+                    $subs = new InlineKeyboard($telegram);
+                    $subs->sendSubs($chatId, $answer($text, $telegramDict));
+                    break;
+                default:
+                    $sms = new SimpleMessageSender($telegram);
+                    $sms->sendMessage($chatId, $answer($text, $telegramDict));
             }
         }
     }

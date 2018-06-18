@@ -2,30 +2,32 @@
 
 namespace app\components\bot;
 
-use Longman\TelegramBot\Telegram;
+use Telegram;
 
 class TelegramUpdatesManager
 {
     private $BOT_API_KEY  = '565720307:AAGIrB3yGu8IYd2-3nGH4J2wLBraLgzWwFs';
-    private $BOT_USERNAME = 'freelansim_gl_bot';
 
-    public function action()
+    public function __construct()
+    {
+        // Создание объекта
+        $this->telegram = new Telegram($this->BOT_API_KEY);
+    }
+
+    public function getUpdates()
     {
         try {
-            // Create Telegram API object
-            $telegram = new Telegram($this->BOT_API_KEY, $this->BOT_USERNAME);
-
-            $telegram->useGetUpdatesWithoutDatabase();
-            $response = $telegram->handleGetUpdates();
-
-            // Make data proper to use
-            $results = json_encode($response->getResult());
-            $results = json_decode($results, true);
-
-            return $results;
-
+            // Получение апдейтов
+            $response = $this->telegram->getUpdates();
         } catch (\Exception $e) {
             echo $e->getMessage();
         }
+        return $response;
     }
+
+    public function getTelegramObj()
+    {
+        return $this->telegram;
+    }
+
 }

@@ -4,8 +4,8 @@ namespace app;
 
 require __DIR__.'/../vendor/autoload.php';
 
-use Longman\TelegramBot\Request;
-
+use app\components\bot\InlineKeyboard;
+use app\components\bot\SimpleMessageSender;
 use app\components\bot\TelegramUpdatesManager;
 use app\components\common\Logger;
 
@@ -13,19 +13,21 @@ $updater = new TelegramUpdatesManager();
 $telegramDict = require_once 'config/telegramDictionary.php';
 
 while (true) {
-    //получает данные о входящих сообщениях
-    $results = $updater->action();
+    // Получаем данные о входящих сообщениях и объект
+    $results = $updater->getUpdates();
+    $telegram = $updater->getTelegramObj();
 
-    //если ничего нет, то ничего и не делаем
+    // Если ничего нет, то ничего и не делаем
     if (!empty($results)) {
+        // Проходимся циклом по всем принятым сообщениям
+        for ($i = 0; $i < $telegram->UpdateCount(); $i++) {
+            $telegram->serveUpdate($i);
 
-        //проходимся циклом по всем принятым сообщениям
-        foreach ($results as $result) {
-            $chatId = $result['message']['chat']['id'];
-            $message = $result['message']['text'];
+            $text = $telegram->Text();
+            $chatId = $telegram->ChatID();
 
-            //выводим пришедшее сообщение в консоль
-            Logger::log('Сообщение от chat_id = '. $chatId.' – '.$message);
+            // Выводим пришедшее сообщение в консоль
+            Logger::log('Сообщение от chat_id = ' . $chatId . ' – ' . $text);
 
             $answer = function ($message, $dict) {
                 if (array_key_exists($message, $dict)) {
@@ -35,12 +37,19 @@ while (true) {
                 }
             };
 
-            $data = [
-                'chat_id' => $chatId,
-                'text' => $answer($message, $telegramDict)
-            ];
-
-            Request::sendMessage($data);
+            switch ($text) {
+                case '/start':
+                    $sms = new SimpleMessageSender($telegram);
+                    $sms->sendMessage($chatId, $answer($text, $telegramDict));
+                    break;
+                case '/subs':
+                    $subs = new InlineKeyboard($telegram);
+                    $subs->sendSubs($chatId, $answer($text, $telegramDict));
+                    break;
+                default:
+                    $sms = new SimpleMessageSender($telegram);
+                    $sms->sendMessage($chatId, $answer($text, $telegramDict));
+            }
         }
     }
     sleep(1);

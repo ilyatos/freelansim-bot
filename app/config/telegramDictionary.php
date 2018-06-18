@@ -1,14 +1,6 @@
 <?php
 
 return [
-    '/start' => 'Добро пожаловать! Подпишетесь на уведомления?',
-    '/inline' => "*bold text*
-                _italic text_
-                [inline URL](http://www.example.com/)
-                [inline mention of a user](tg://user?id=123456789)
-                `inline fixed-width code`
-                ```block_language
-                pre-formatted fixed-width code block
-                ```",
-
+    '/start' => 'Добро пожаловать в freelansim-gl-bot by IMA! Вызовите /subs для продолжения.',
+    '/subs' => 'Выберите действие над подпиской на обновления с сайта freelansim.ru',
 ];

@@ -1,6 +1,8 @@
 <?php
 
-require_once '../components/simple_html_dom.php';
+namespace app\components;
+
+require_once '../simple_html_dom.php';
 
 
 class Parser {

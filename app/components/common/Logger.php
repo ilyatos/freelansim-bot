@@ -1,6 +1,6 @@
 <?php
 
-namespace components\common;
+namespace app\components;
 
 
 class Logger

@@ -6,8 +6,8 @@ require __DIR__.'/../vendor/autoload.php';
 
 use Longman\TelegramBot\Request;
 
-use app\TelegramUpdatesManager;
-use components\common\Logger;
+use app\components\TelegramUpdatesManager;
+use app\components\Logger;
 
 $updater = new TelegramUpdatesManager();
 $telegramDict = require_once '../config/telegramDictionary.php';

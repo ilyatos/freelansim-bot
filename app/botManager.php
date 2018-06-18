@@ -6,11 +6,11 @@ require __DIR__.'/../vendor/autoload.php';
 
 use Longman\TelegramBot\Request;
 
-use app\components\TelegramUpdatesManager;
-use app\components\Logger;
+use app\components\bot\TelegramUpdatesManager;
+use app\components\common\Logger;
 
 $updater = new TelegramUpdatesManager();
-$telegramDict = require_once '../config/telegramDictionary.php';
+$telegramDict = require_once 'config/telegramDictionary.php';
 
 while (true) {
     //получает данные о входящих сообщениях

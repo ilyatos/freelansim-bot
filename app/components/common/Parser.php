@@ -1,6 +1,6 @@
 <?php
 
-namespace app\components;
+namespace app\components\common;
 
 require_once '../simple_html_dom.php';
 

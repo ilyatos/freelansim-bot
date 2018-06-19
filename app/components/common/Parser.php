@@ -8,8 +8,6 @@
 
 namespace app\components\common;
 
-use yii\di\Container;
-
 require_once '../simple_html_dom.php';
 
 

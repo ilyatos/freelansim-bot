@@ -2,3 +2,4 @@
 vendor
 .DS_STORE
 /app/TelegramErrorLogger.txt
+config/db.php

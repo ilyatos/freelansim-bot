@@ -1,5 +1,8 @@
 <?php
 
-namespace app;
-
-return ['localhost', 'telbot', 'root', '']; //3 - password
+return [
+    "localhost",
+    "freelansim-bot",
+    "root",
+    "root",
+];

@@ -7,10 +7,12 @@ require __DIR__.'/../vendor/autoload.php';
 use app\components\bot\InlineKeyboard;
 use app\components\bot\SimpleMessageSender;
 use app\components\bot\TelegramUpdatesManager;
+use app\components\common\DbConnection;
 use app\components\common\Logger;
 
 $updater = new TelegramUpdatesManager();
 $telegramDict = require_once 'config/telegramDictionary.php';
+$db = new DbConnection();
 
 while (true) {
     // Получаем данные о входящих сообщениях и объект
@@ -45,6 +47,16 @@ while (true) {
                 case '/subs':
                     $subs = new InlineKeyboard($telegram);
                     $subs->sendSubs($chatId, $answer($text, $telegramDict));
+                    break;
+                case 'subscribe_update':
+                    $db->pushToBase($chatId, 1);
+                    $sms = new SimpleMessageSender($telegram);
+                    $sms->sendMessage($chatId, $answer($text, $telegramDict));
+                    break;
+                case 'unsubscribe_update':
+                    $db->pushToBase($chatId, 0);
+                    $sms = new SimpleMessageSender($telegram);
+                    $sms->sendMessage($chatId, $answer($text, $telegramDict));
                     break;
                 default:
                     $sms = new SimpleMessageSender($telegram);

@@ -30,20 +30,43 @@ class DbConnection {
     }
 
     /**
-     * Adding users to base
+     * Adding or updating users in base
      * @param $id
      * @param $subscribing
      * @return void
      */
     public function pushToBase($id, $subscribing) {
-        $sql = "INSERT INTO `freelansim-bot`.users(chat_id,subscribe) VALUES ($id,$subscribing)";
+        $sql = "UPDATE * `freelansim-bot`.users SET subcribe = $subscribing WHERE chat_id = $id";
+        $condition = "SELECT COUNT (*) FROM `freelansim-bot`.users WHERE chat_id = $id";
+
         try {
-            $this->db->exec($sql);
+            $condition = $this->db->query($condition);
         } catch (\PDOException $e) {
             echo $e->getMessage();
             echo $e->getTraceAsString();
-        } finally {
-            $this->db = null;
+        }
+
+        if ($condition > 0) {
+            try {
+                $sql = $this->db->prepare($sql);
+                $this->db->exec($sql);
+            } catch (\PDOException $e){
+                echo $e->getMessage();
+                echo $e->getTraceAsString();
+            } finally {
+                $this->db = null;
+            }
+        }
+        else {
+            $sql = "INSERT INTO `freelansim-bot`.users(chat_id,subscribe) VALUES ($id,$subscribing)";
+            try {
+                $this->db->exec($sql);
+            } catch (\PDOException $e) {
+                echo $e->getMessage();
+                echo $e->getTraceAsString();
+            } finally {
+                $this->db = null;
+            }
         }
     }
 

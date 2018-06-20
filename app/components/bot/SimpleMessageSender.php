@@ -1,21 +1,29 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: IlyaGoryachev
- * Date: 18.06.2018
- * Time: 16:13
- */
 
 namespace app\components\bot;
 
-
+/**
+ * Class SimpleMessageSender
+ * @package app\components\bot
+ */
 class SimpleMessageSender
 {
+    /**
+     * SimpleMessageSender constructor.
+     *
+     * @param \Telegram $telegram
+     */
     public function __construct(\Telegram $telegram)
     {
         $this->telegram = $telegram;
     }
 
+    /**
+     * Send simple message function.
+     *
+     * @param $chatId integer
+     * @param $message string
+     */
     public function sendMessage($chatId, $message)
     {
         $content = [

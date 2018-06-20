@@ -2,11 +2,18 @@
 
 namespace app\components\common;
 
-
+/**
+ * Class Logger
+ *
+ * @package app\components\common
+ */
 class Logger
 {
-    private const AA = 2;
-
+    /**
+     * Logging in cmd everything you want.
+     *
+     * @param $message string
+     */
     public static function log($message)
     {
         $currentTime = date('H:i:s');

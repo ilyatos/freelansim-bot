@@ -9,7 +9,7 @@ class DbConnection {
     function __construct() {
         try {
             $user_db = require '../../../config/db.php';
-            $db = new \PDO("mysql:host = $user_db[host];dbname = $user_db[database]", $user_db[user], $user_db[password]);
+            $db = new \PDO("mysql:host = $user_db[host]; dbname = $user_db[database]", $user_db[user], $user_db[password]);
         } catch (\PDOException $exception) {
             $exception->getTrace();
         }

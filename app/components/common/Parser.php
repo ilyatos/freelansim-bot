@@ -8,8 +8,7 @@
 
 namespace app\components\common;
 
-require_once '../simple_html_dom.php';
-
+require __DIR__.'/../simple_html_dom.php';
 
 /**
  * Class Parser
@@ -44,7 +43,7 @@ class Parser {
     const PRICE_NEGOTIATED = '.negotiated_price';
 
     /**
-     * @var string CSS selector for task title element
+     * @var string CSS selector for task title element (which also contains task id)
      */
     const TITLE = '.task__title a';
 
@@ -193,8 +192,14 @@ class Parser {
      * @return mixed[]|null Associative array of task parameters
      */
     private function getTask($taskNode) {
-        if (!is_null($taskNode->find($this::TITLE, 0))) {
+        $title = $taskNode->find($this::TITLE, 0);
+
+        if (!is_null($title)) {
+            $taskLinkExploded = explode('/', $title->attr['href']);
+
             return [
+                'id' => intval($taskLinkExploded[count($taskLinkExploded) - 1]),
+                'link' => $title->attr['href'],
                 'title' => trim($taskNode->find($this::TITLE, 0)->text()),
                 'tags' => $this->getTags($taskNode->find($this::TAGS, 0)),
                 'price' => $this->getPrice($taskNode->find($this::PRICE_SECTION, 0))
@@ -232,38 +237,6 @@ class Parser {
 
 
     /**
-     * Finds pagination element on given page and gets the last value;
-     * if there is no pagination element on given page then:
-     * if there is a task container element then page count is 1;
-     * else page count is 0
-     *
-     * @uses Parser::PAGINATION_LINK selector to search
-     * @see Parser::PAGINATION_LINK
-     *
-     * @uses Parser::getContainerNode() to get task container element
-     * @see Parser::getContainerNode()
-     *
-     * @param $page
-     * @return int
-     */
-    private function getPageCount($page) {
-        $paginationNode = $page->find($this::PAGINATION_LINK, -2);
-
-        if (!is_null($paginationNode)) {
-            $pageCountString = $paginationNode->text();
-        } else {
-                if (!is_null($this->getContainerNode($page))) {
-                    $pageCountString = '1';
-                } else {
-                    $pageCountString = '0';
-                }
-        }
-
-        return intval($pageCountString);
-    }
-
-
-    /**
      * Requests an URL and creates a page DOM element out of response body
      *
      * @uses Parser::url to make request
@@ -286,13 +259,10 @@ class Parser {
 
 
     /**
-     * Parses the task list for given tag list
+     * Parses the task list for given page
      *
-     * @uses Parser::getPageTree() to get pages' DOM elements
+     * @uses Parser::getPageTree() to get page DOM element
      * @see Parser::getPageTree()
-     *
-     * @uses Parser::getPageCount() to get the number of pages for given query
-     * @see Parser::getPageCount()
      *
      * @uses Parser::getTasks() to extract task data
      * @see Parser::getTasks()
@@ -300,28 +270,14 @@ class Parser {
      * @uses Parser::getContainerNode() to get task container element
      * @see Parser::getContainerNode()
      *
-     * @return mixed[] Parsed data
+     * @param integer|null $pageNumber number of page to parse
+     * @return array[] Parsed data
      */
-    public function parse() {
-        $firstPage = $this->getPageTree();
+    public function parse($pageNumber=null) {
+        $page = $this->getPageTree($pageNumber);
 
-        $pageCount = $this->getPageCount($firstPage);
+        $taskContainer = $this->getContainerNode($page);
 
-        $parsed = [
-            'count' => $pageCount,
-            'pages' => []
-        ];
-
-        if ($pageCount > 0) {
-            $parsed['pages'][1] = $this->getTasks($this->getContainerNode($firstPage));
-        }
-
-        if ($pageCount > 1) {
-            for ($pageNumber = 2; $pageNumber <= $pageCount; $pageNumber++) {
-                $parsed['pages'][$pageNumber] = $this->getTasks($this->getContainerNode($this->getPageTree($pageNumber)));
-            }
-        }
-
-        return $parsed;
+        return !is_null($taskContainer) ? $this->getTasks($taskContainer) : [];
     }
 }

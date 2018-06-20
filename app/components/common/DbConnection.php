@@ -78,7 +78,7 @@ class DbConnection {
         $sql = "SELECT chat_id FROM `freelansim-bot`.users WHERE subscribe = 1";
         try{
             $state = $this->db->query($sql);
-            $result = $state->fetchAll(PDO::FETCH_NUM);
+            $result = $state->fetchAll(PDO::FETCH_ASSOC);
         } catch (\PDOException $e) {
             echo $e->getMessage();
             echo $e->getTraceAsString();

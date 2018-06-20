@@ -5,6 +5,7 @@ namespace app;
 require __DIR__.'/../vendor/autoload.php';
 
 use app\components\bot\InlineKeyboard;
+use app\components\bot\ScheduleParser;
 use app\components\bot\SimpleMessageSender;
 use app\components\bot\TelegramUpdatesManager;
 use app\components\common\DbConnection;
@@ -12,7 +13,13 @@ use app\components\common\Logger;
 
 $updater = new TelegramUpdatesManager();
 $telegramDict = require_once 'config/telegramDictionary.php';
+
 $db = new DbConnection();
+
+$scpar = new ScheduleParser();
+$parseResults = $scpar->getResults();
+
+$timeOut = 0;
 
 while (true) {
     // Получаем данные о входящих сообщениях и объект
@@ -63,6 +70,42 @@ while (true) {
                     $sms->sendMessage($chatId, $answer($text, $telegramDict));
             }
         }
+    }
+
+    if (intdiv($timeOut, 60) != 0) {
+        $scparRes = $scpar->getResults();
+
+        //test code
+        /*$scparRes[2]['id'] = $scparRes[0]['id'];
+        $scparRes[0]['id'] = 98874;
+        $scparRes[1]['id'] = 98833;*/
+
+        if ($parseResults[0]['id'] !=  $scparRes[0]['id']) {
+            $oldResult = $parseResults[0]['id'];
+            $parseResults = [];
+
+            foreach ($scparRes as $result) {
+                if ($result['id'] != $oldResult) {
+                    array_push($parseResults, $result);
+                } else {
+                    break;
+                }
+            }
+
+            $subsUsers = $db->getUsers();
+            $sms = new SimpleMessageSender($telegram);
+
+            foreach ($subsUsers as $user) {
+                $message = '';
+                foreach ($parseResults as $job) {
+                    $message .= $job['title'].'.'.PHP_EOL;
+                }
+                $sms->sendMessage($user['chat_id'], $message);
+            }
+        }
+        $timeOut += 10;
+    } else {
+        $timeOut += 10;
     }
     sleep(1);
 }

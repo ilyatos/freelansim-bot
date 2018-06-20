@@ -2,9 +2,4 @@
 
 namespace app;
 
-return [
-    "database" => "telbot",
-    "user" => "root",
-    "password" => "",
-    "host" => "localhost"
-];
+return ['localhost', 'telbot', 'root', '']; //3 - password

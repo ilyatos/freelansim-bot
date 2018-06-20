@@ -74,19 +74,21 @@ class Parser {
      * Initialises given params
      *
      * @param mixed[] $params associative array of parameters
+     *
+     * @throws \InvalidArgumentException if there is no url in $params
      */
-    function __construct($params=null) {
-        if (!is_null($params)) {
-            if (isset($params['url'])) {
-                $this->url = $params['url'];
-            }
+    function __construct($params) {
+        if (isset($params['url'])) {
+            $this->url = $params['url'];
+        } else {
+            throw new \InvalidArgumentException('No URL specified');
+        }
 
-            if (isset($params['tags'])) {
-                $tags = array_map(function ($tag) {
-                    return '[' . $tag . ']';
-                }, $params['tags']);
-                $this->tags = join('', $tags);
-            }
+        if (isset($params['tags'])) {
+            $tags = array_map(function ($tag) {
+                return '[' . $tag . ']';
+            }, $params['tags']);
+            $this->tags = join('', $tags);
         }
     }
 

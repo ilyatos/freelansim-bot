@@ -72,7 +72,7 @@ while (true) {
         }
     }
 
-    if (intdiv($timeOut, 360) != 0) {
+    if (intdiv($timeOut, 1800) != 0) {
         $scparRes = $scpar->getResults();
 
         if ($parseResults[0]['id'] !=  $scparRes[0]['id']) {

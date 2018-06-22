@@ -72,13 +72,8 @@ while (true) {
         }
     }
 
-    if (intdiv($timeOut, 60) != 0) {
+    if (intdiv($timeOut, 360) != 0) {
         $scparRes = $scpar->getResults();
-
-        //test code
-        /*$scparRes[2]['id'] = $scparRes[0]['id'];
-        $scparRes[0]['id'] = 98874;
-        $scparRes[1]['id'] = 98833;*/
 
         if ($parseResults[0]['id'] !=  $scparRes[0]['id']) {
             $oldResult = $parseResults[0]['id'];
@@ -103,9 +98,9 @@ while (true) {
                 $sms->sendMessage($user['chat_id'], $message);
             }
         }
-        $timeOut += 10;
+        $timeOut += 1;
     } else {
-        $timeOut += 10;
+        $timeOut += 1;
     }
     sleep(1);
 }

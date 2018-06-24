@@ -8,13 +8,13 @@ use app\components\bot\InlineKeyboard;
 use app\components\bot\ScheduleParser;
 use app\components\bot\SimpleMessageSender;
 use app\components\bot\TelegramUpdatesManager;
-use app\components\common\DbConnection;
+use app\components\common\User;
 use app\components\common\Logger;
 
 $updater = new TelegramUpdatesManager();
 $telegramDict = require_once 'config/telegramDictionary.php';
 
-$db = new DbConnection();
+$user = new User();
 
 $scpar = new ScheduleParser();
 $parseResults = $scpar->getResults();
@@ -56,12 +56,12 @@ while (true) {
                     $subs->sendSubs($chatId, $answer($text, $telegramDict));
                     break;
                 case 'subscribe_update':
-                    $db->pushToBase($chatId, 1);
+                    $user->pushToBase($chatId, 1);
                     $sms = new SimpleMessageSender($telegram);
                     $sms->sendMessage($chatId, $answer($text, $telegramDict));
                     break;
                 case 'unsubscribe_update':
-                    $db->pushToBase($chatId, 0);
+                    $user->pushToBase($chatId, 0);
                     $sms = new SimpleMessageSender($telegram);
                     $sms->sendMessage($chatId, $answer($text, $telegramDict));
                     break;
@@ -71,6 +71,7 @@ while (true) {
             }
         }
     }
+    
 
     if (intdiv($timeOut, 1800) != 0) {
         $scparRes = $scpar->getResults();
@@ -87,7 +88,7 @@ while (true) {
                 }
             }
 
-            $subsUsers = $db->getUsers();
+            $subsUsers = $user->getUsers();
             $sms = new SimpleMessageSender($telegram);
 
             foreach ($subsUsers as $user) {

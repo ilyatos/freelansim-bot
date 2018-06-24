@@ -6,8 +6,10 @@ use app\components\common\Parser;
 
 class ScheduleParser
 {
-    private $results = [];
 
+    /**
+     * ScheduleParser constructor.
+     */
     public function __construct()
     {
         $this->parser = new Parser(['url' => 'https://freelansim.ru/tasks']);
@@ -15,11 +17,12 @@ class ScheduleParser
 
 
     /**
+     * Get parsed results.
+     *
      * @return array
      */
     public function getResults()
     {
-        $this->results = $this->parser->parse();
-        return $this->results;
+        return $this->parser->parse();
     }
 }

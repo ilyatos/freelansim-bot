@@ -9,7 +9,7 @@ use PDO;
  *
  * @package app\components\common
  */
-class DbConnection {
+class User {
 
     /**
      * @var \PDO
@@ -21,23 +21,13 @@ class DbConnection {
      *
      * @param $id
      * @param $subscribing
-     * @return void
      */
-    public function pushToBase($id, $subscribing) {
-        $sql = "UPDATE `freelansim-bot`.users SET subscribe = $subscribing WHERE chat_id = $id";
-        $condition = "SELECT count(*) FROM `freelansim-bot`.users WHERE chat_id = $id";
+    public function pushToBase($id, $subscribing)
+    {
+        $sql = "INSERT INTO `freelansim-bot`.users(chat_id,subscribe) VALUES ($id,$subscribing) ON DUPLICATE KEY UPDATE `subscribe`=$subscribing";
         try {
             $this->openConnection();
-            $result = $this->db->prepare($condition);
-            $result->execute();
-            $numberOfRows = $result->fetchColumn();
-            if ($numberOfRows > 0) {
-                $sql = $this->db->prepare($sql);
-                $sql->execute();
-            } else {
-                $sql = "INSERT INTO `freelansim-bot`.users(chat_id,subscribe) VALUES ($id,$subscribing)";
-                $this->db->exec($sql);
-            }
+            $this->db->exec($sql);
         } catch (\PDOException $e) {
             echo $e->getMessage();
             echo $e->getTraceAsString();
@@ -71,14 +61,9 @@ class DbConnection {
      */
     private function openConnection()
     {
-        $user_db = require __DIR__.'/../../../config/db.php';
-        try {
-            $this->db = new PDO("mysql:host = $user_db[0]; dbname = $user_db[1]", $user_db[2], $user_db[3]);
-            $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (\PDOException $e) {
-            echo $e->getMessage();
-            echo $e->getTraceAsString();
-        }
+        $userDb = require __DIR__.'/../../../config/db.php';
+        $this->db = new PDO("mysql:host = $userDb[0]; dbname = $userDb[1]", $userDb[2], $userDb[3]);
+        $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
     /**

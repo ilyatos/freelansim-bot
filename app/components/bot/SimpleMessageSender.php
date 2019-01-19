@@ -13,9 +13,10 @@ class SimpleMessageSender
      *
      * @param \Telegram $telegram
      */
-    public function __construct(\Telegram $telegram)
+    public function __construct(\Telegram $telegram, $chatId)
     {
         $this->telegram = $telegram;
+        $this->chatId = $chatId;
     }
 
     /**
@@ -24,10 +25,10 @@ class SimpleMessageSender
      * @param $chatId integer
      * @param $message string
      */
-    public function sendMessage($chatId, $message)
+    public function sendMessage($message)
     {
         $content = [
-            'chat_id' => $chatId,
+            'chat_id' => $this->chatId,
             'text' => $message
         ];
 

@@ -27,7 +27,7 @@ class UserTag {
             $sql = "SELECT tag FROM `freelansim-bot`.users_tags WHERE chat_id = $chat_id";
             $this->openConnection();
             $state = $this->db->query($sql);
-            $result = $state->fetchAll(PDO::FETCH_ASSOC);
+            $result = $state->fetchAll(PDO::FETCH_COLUMN);
             return $result;
         } catch (\PDOException $e){
             echo $e->getMessage();
@@ -45,19 +45,39 @@ class UserTag {
      * @return string
      */
     function pushTagToBase($chat_id, $tag) {
-        $sql = "INSERT INTO `freelansim-bot`.users_tags WHERE chat_id = $chat_id";
-        $condition = "SELECT COUNT(*) FROM `freelansim-bot`.users_tags WHERE chat_id = $chat_id AND tag = $tag";
+        $sql = "INSERT INTO `freelansim-bot`.`users_tags`(`chat_id`, `tag`) VALUES ($chat_id, '$tag')";
+        $condition = "SELECT count(*) FROM `freelansim-bot`.`users_tags` WHERE `chat_id` = $chat_id AND `tag` = '$tag'";
         try {
             $this->openConnection();
-            $result = $this->db->prepare($condition);
-            $result->execute();
-            $numberOfRows = $result->fetchColumn();
+            $numberOfRows = $this->db->query($condition)->fetchColumn();
             if ($numberOfRows == 0) {
-                $sql = $this->db->prepare($sql);
-                $sql->execute();
+                $this->db->exec($sql);
+                return true;
             }
             else {
-                return "This tag already exists for this user";
+                return false;
+            }
+        } catch (\PDOException $e) {
+            echo $e->getMessage();
+            echo $e->getTraceAsString();
+        } finally {
+            $this->closeConnection();
+        }
+    }
+
+    public function deleteTagFromBase($chat_id, $tag)
+    {
+        $sql = "DELETE FROM `freelansim-bot`.`users_tags` WHERE `chat_id` = $chat_id AND `tag` = '$tag'";
+        $condition = "SELECT count(*) FROM `freelansim-bot`.`users_tags` WHERE `chat_id` = $chat_id AND `tag` = '$tag'";
+        try {
+            $this->openConnection();
+            $numberOfRows = $this->db->query($condition)->fetchColumn();
+            if ($numberOfRows != 0) {
+                $this->db->exec($sql);
+                return true;
+            }
+            else {
+                return false;
             }
         } catch (\PDOException $e) {
             echo $e->getMessage();

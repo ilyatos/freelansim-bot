@@ -10,11 +10,13 @@ use app\components\bot\SimpleMessageSender;
 use app\components\bot\TelegramUpdatesManager;
 use app\components\common\User;
 use app\components\common\Logger;
+use app\components\common\UserTag;
 
 $updater = new TelegramUpdatesManager();
 $telegramDict = require_once 'config/telegramDictionary.php';
 
 $user = new User();
+$userTag = new UserTag();
 
 $scpar = new ScheduleParser();
 $parseResults = $scpar->getResults();
@@ -46,10 +48,13 @@ while (true) {
                 }
             };
 
-            switch ($text) {
+
+            $sms = new SimpleMessageSender($telegram, $chatId);
+            $explText = explode(' ', $text);
+
+            switch ($explText[0]) {
                 case '/start':
-                    $sms = new SimpleMessageSender($telegram);
-                    $sms->sendMessage($chatId, $answer($text, $telegramDict));
+                    $sms->sendMessage($answer($text, $telegramDict));
                     break;
                 case '/subs':
                     $subs = new InlineKeyboard($telegram);
@@ -57,29 +62,64 @@ while (true) {
                     break;
                 case 'subscribe_update':
                     $user->pushToBase($chatId, 1);
-                    $sms = new SimpleMessageSender($telegram);
-                    $sms->sendMessage($chatId, $answer($text, $telegramDict));
+                    $sms->sendMessage($answer($text, $telegramDict));
                     break;
                 case 'unsubscribe_update':
                     $user->pushToBase($chatId, 0);
-                    $sms = new SimpleMessageSender($telegram);
-                    $sms->sendMessage($chatId, $answer($text, $telegramDict));
+                    $sms->sendMessage($answer($text, $telegramDict));
+                    break;
+                case '/tags':
+                    $utArray = $userTag->getUserTags($chatId);
+                    $message = 'Ваши теги:'.PHP_EOL;
+                    foreach ($utArray as $ut) {
+                        $message .= $ut['tag'].PHP_EOL;
+                    }
+                    $sms->sendMessage($message);
+                    break;
+                case '/subs_tag':
+                    if (!array_key_exists(1, $explText)) {
+                        $sms->sendMessage($answer($explText[0], $telegramDict));
+                        break;
+                    }
+                    $tag = $explText[1];
+                    if (!$userTag->pushTagToBase($chatId, $tag)) {
+                        $sms->sendMessage('Вы уже подписаны на тег: `'.$tag.'`');
+                    } else {
+                        $sms->sendMessage('Вы успешно подписались на тег: `'.$tag.'`');
+                    }
+                    break;
+                case '/unsubs_tag':
+                    if (!array_key_exists(1, $explText)) {
+                        $sms->sendMessage($answer($explText[0], $telegramDict));
+                        break;
+                    }
+                    $tag = $explText[1];
+                    if (!$userTag->deleteTagFromBase($chatId, $tag)) {
+                        $sms->sendMessage('Вы уже отписаны от тега: `'.$tag.'`');
+                    } else {
+                        $sms->sendMessage('Вы успешно отписались от тега: `'.$tag.'`');
+                    }
                     break;
                 default:
-                    $sms = new SimpleMessageSender($telegram);
-                    $sms->sendMessage($chatId, $answer($text, $telegramDict));
+                    $sms->sendMessage($answer($text, $telegramDict));
             }
         }
     }
     
-
+    //рассылка
     if (intdiv($timeOut, 1800) != 0) {
         $scparRes = $scpar->getResults();
 
-        if ($parseResults[0]['id'] !=  $scparRes[0]['id']) {
-            $oldResult = $parseResults[0]['id'];
-            $parseResults = [];
+        //test data
+       /* $scparRes[2]['id'] = $scparRes[0]['id'];
+        $scparRes[0]['id'] = 32331;
+        $scparRes[1]['id'] = 33434;*/
 
+        if ($parseResults[0]['id'] !=  $scparRes[0]['id']) {
+
+            $oldResult = $parseResults[0]['id'];
+
+            $parseResults = [];
             foreach ($scparRes as $result) {
                 if ($result['id'] != $oldResult) {
                     array_push($parseResults, $result);
@@ -89,14 +129,27 @@ while (true) {
             }
 
             $subsUsers = $user->getUsers();
-            $sms = new SimpleMessageSender($telegram);
 
             foreach ($subsUsers as $user) {
-                $message = '';
-                foreach ($parseResults as $job) {
-                    $message .= $job['title'].'.'.PHP_EOL;
+                $sms = new SimpleMessageSender($telegram, $user['chat_id']);
+                //рассылка по тегам
+                if ($tags = $userTag->getUserTags($user['chat_id'])) {
+                    $message = '';
+                    foreach ($parseResults as $job) {
+                        $intersection = array_intersect($job['tags'], $tags);
+                        if (!empty($intersection)) {
+                            $message .= $job['title'].'.'.PHP_EOL;
+                            $message .= ' Теги: '. implode('-',$intersection).PHP_EOL;
+                        }
+                    }
+                } else {
+                    //рассылка без тегов
+                    $message = '';
+                    foreach ($parseResults as $job) {
+                        $message .= $job['title'].'.'.PHP_EOL;
+                    }
                 }
-                $sms->sendMessage($user['chat_id'], $message);
+                $sms->sendMessage($message);
             }
         }
         $timeOut += 1;
